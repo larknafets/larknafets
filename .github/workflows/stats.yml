@@ -1,0 +1,21 @@
+name: update-stats
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: .github/update-stats.sh "$GITHUB_REPOSITORY_OWNER"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - run: |
+          git diff --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: refresh stats, still 200 OK"
+          git push
