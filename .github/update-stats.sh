@@ -35,7 +35,7 @@ uptime="$((months / 12))y $((months % 12))m"
 age=$(awk -v y="$(date -u +%Y)" -v m="$(date -u +%m)" 'BEGIN { printf "%.1f", ((y - 1979) * 12 + m - 8) / 12 }')
 # two Uptime lines: the first (neofetch block) is the age, the one after "gh stats" is the GitHub account age
 sed -i.bak -E \
-  -e "1,/gh stats/ s/^(Uptime \.+ ).*/\1$age years/" \
+  -e "1,/gh stats/ s/^(Uptime \.+ )[0-9.]+ years/\1$age years/" \
   -e "/gh stats/,\$ s/^(Uptime \.+ ).*/\1$uptime/" \
   -e "s/^(Repos \.+ ).*/\1$repos/" \
   -e "s/^(Commits \.+ ).*/\1$commits/" \
