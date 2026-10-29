@@ -30,9 +30,9 @@ Role .......... Senior IT Consultant
 Location ...... ~/nordsee (remote-first, tide-driven)
 Uptime ........ 47.2 years (booted at 337 ppm CO2)
 Focus ......... Sustainable IT, renewable energy, efficiency
-Optimizing .... watts, bytes and meetings
-Principle ..... Make it work, make it right, make it fast (in that order)
-Mode .......... cloudy with a chance of surplus
+Optimizing .... Watts, bytes and meetings
+Principle ..... Make it work, make it right, make it fast.
+Mode .......... Cloudy with a chance of surplus
 ```
 
 ```console
@@ -49,6 +49,7 @@ Lines of code . 127.8k (+99.7k / -28.1k)
 stefan@kral:~$ ls -l ~/contact
 linkedin -> linkedin.com/in/stefan-kral
 github   -> github.com/larknafets
+500px    -> 500px.com/p/stefankral
 ```
 
 ```console
