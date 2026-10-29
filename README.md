@@ -54,8 +54,3 @@ linkedin -> linkedin.com/in/stefan-kral
 github   -> github.com/larknafets
 500px    -> 500px.com/p/stefankral
 ```
-
-```console
-stefan@kral:~$ echo "stefan kral" | rev | tr -d " "
-larknafets
-```
