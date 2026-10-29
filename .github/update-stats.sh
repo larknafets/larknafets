@@ -31,8 +31,12 @@ human() { awk -v n="$1" 'BEGIN { if (n >= 1000) printf "%.1fk", n / 1000; else p
 if [ "$failed" = 1 ]; then loc=$(sed -n -E 's/^Lines of code \.+ (.*)/\1/p' README.md); else loc="$(human $((add + del))) (+$(human "$add") / -$(human "$del"))"; fi
 months=$((($(date -u +%Y) - ${created:0:4}) * 12 + 10#$(date -u +%m) - 10#${created:5:2} ))
 uptime="$((months / 12))y $((months % 12))m"
+# age from birth year+month only (1979-07), one decimal
+age=$(awk -v y="$(date -u +%Y)" -v m="$(date -u +%m)" 'BEGIN { printf "%.1f", ((y - 1979) * 12 + m - 7) / 12 }')
+# two Uptime lines: the first (neofetch block) is the age, the one after "gh stats" is the GitHub account age
 sed -i.bak -E \
-  -e "s/^(Uptime \.+ ).*/\1$uptime/" \
+  -e "1,/gh stats/ s/^(Uptime \.+ ).*/\1$age years/" \
+  -e "/gh stats/,\$ s/^(Uptime \.+ ).*/\1$uptime/" \
   -e "s/^(Repos \.+ ).*/\1$repos/" \
   -e "s/^(Commits \.+ ).*/\1$commits/" \
   -e "s/^(PRs \.+ ).*/\1$prs/" \
