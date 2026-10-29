@@ -36,13 +36,17 @@ Mode .......... Cloudy with a chance of surplus
 ```
 
 ```console
-stefan@kral:~$ gh stats --refresh 24h
+stefan@kral:~$ gh stats --refresh 24h --top 3
 Uptime ........ 10y 8m
 Repos ......... 13
 Commits ....... 695
 PRs ........... 74
 Merged ........ 73
 Lines of code . 127.8k (+99.7k / -28.1k)
+
+nebenkostenrechner . 469 commits
+gcs-connector-evcc . 47 commits
+ha-addons .......... 33 commits
 ```
 
 ```console
