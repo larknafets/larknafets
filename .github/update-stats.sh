@@ -2,14 +2,14 @@
 # Rewrites the stat lines in README.md with all-time counts. Needs gh + GH_TOKEN.
 set -euo pipefail
 u="${1:-larknafets}"
-read -r created repos prs merged < <(gh api graphql -f login="$u" \
+read -r repos prs merged < <(gh api graphql -f login="$u" \
   -f prs="author:$u type:pr" -f merged="author:$u type:pr is:merged" -f query='
 query($login:String!,$prs:String!,$merged:String!){
-  user(login:$login){createdAt
+  user(login:$login){
     repositories(privacy:PUBLIC,ownerAffiliations:OWNER){totalCount}}
   prs:search(query:$prs,type:ISSUE){issueCount}
   merged:search(query:$merged,type:ISSUE){issueCount}}' \
-  --jq '.data | [.user.createdAt, .user.repositories.totalCount, .prs.issueCount, .merged.issueCount] | @tsv')
+  --jq '.data | [.user.repositories.totalCount, .prs.issueCount, .merged.issueCount] | @tsv')
 # shortcut: search counts public default-branch commits only, upgrade if private/other-branch work matters
 commits=$(gh api -X GET search/commits -f q="author:$u" --jq .total_count)
 # shortcut: sums contributor stats of own non-fork repos, so vendored or generated files inflate it, upgrade by excluding paths
@@ -33,14 +33,10 @@ top=$(printf '%s' "$active" | sort -rn | head -3 | awk '{ l = $2 " "; for (i = l
 human() { awk -v n="$1" 'BEGIN { if (n >= 1000) printf "%.1fk", n / 1000; else print n }'; }
 # keep the previous LOC line if any repo's stats were not ready yet
 if [ "$failed" = 1 ]; then loc=$(sed -n -E 's/^Lines of code \.+ (.*)/\1/p' README.md); else loc="$(human $((add + del))) (+$(human "$add") / -$(human "$del"))"; fi
-months=$((($(date -u +%Y) - ${created:0:4}) * 12 + 10#$(date -u +%m) - 10#${created:5:2} ))
-uptime="$((months / 12))y $((months % 12))m"
 # age from birth year+month only (1979-08), one decimal
 age=$(awk -v y="$(date -u +%Y)" -v m="$(date -u +%m)" 'BEGIN { printf "%.1f", ((y - 1979) * 12 + m - 8) / 12 }')
-# two Uptime lines: the first (neofetch block) is the age, the one after "gh stats" is the GitHub account age
 sed -i.bak -E \
-  -e "1,/gh stats/ s/^(Uptime \.+ )[0-9.]+ years/\1$age years/" \
-  -e "/gh stats/,\$ s/^(Uptime \.+ ).*/\1$uptime/" \
+  -e "s/^(Uptime \.+ )[0-9.]+ years/\1$age years/" \
   -e "s/^(Repos \.+ ).*/\1$repos/" \
   -e "s/^(Commits \.+ ).*/\1$commits/" \
   -e "s/^(PRs \.+ ).*/\1$prs/" \

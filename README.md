@@ -37,7 +37,6 @@ Mode .......... Cloudy with a chance of surplus
 
 ```console
 stefan@kral:~$ gh stats --refresh 24h --top 3
-Uptime ........ 10y 8m
 Repos ......... 13
 Commits ....... 705
 PRs ........... 74
