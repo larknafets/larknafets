@@ -28,7 +28,7 @@ stefan@kral:~$ neofetch
 Name .......... Stefan Kral
 Role .......... Senior IT Consultant
 Location ...... ~/nordsee (remote-first, tide-driven)
-Uptime ........ 47.3 years
+Uptime ........ 47.2 years
 Focus ......... Sustainable IT, renewable energy, efficiency
 Optimizing .... watts, bytes and meetings
 Principles .... Simple > clever, tested > hopeful, boring tech wins
@@ -45,11 +45,11 @@ d4e5f6a Delete more code than I write
 ```console
 stefan@kral:~$ gh stats --refresh 24h
 Uptime ........ 10y 8m
-Repos ......... 12
-Commits ....... 812
-PRs ........... 75
+Repos ......... 13
+Commits ....... 695
+PRs ........... 74
 Merged ........ 73
-Lines of code . 129.1k (+100.7k / -28.4k)
+Lines of code . 127.8k (+99.7k / -28.1k)
 ```
 
 ```console
