@@ -8,8 +8,9 @@ principles = TODO TODO TODO
 # Status: employed (not looking), open (employed, open to new things), unemployed or away (vacation, offline).
 status = open
 
-# Profile block: the Role line is generated from this.
+# Profile block: only the Role line and the age in the Uptime line are generated from these.
 role  = Senior IT Consultant
+birth = 1979-08
 
 # Outputs: file = blocks in order. The site README is pulled by the private website.
 README.md      = status profile principles stats contact

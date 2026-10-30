@@ -63,7 +63,8 @@ EOF
   echo "$fence"
 } > blocks/principles.md
 
-age=$(awk -v y="$(date -u +%Y)" -v m="$(date -u +%m)" 'BEGIN { printf "%.1f", ((y - 1979) * 12 + m - 8) / 12 }')
+birth=$(get birth)
+age=$(awk -v y="$(date -u +%Y)" -v m="$(date -u +%m)" -v by="${birth%-*}" -v bm="${birth#*-}" 'BEGIN { printf "%.1f", ((y - by) * 12 + m - bm) / 12 }')
 # only the age number and the role are touched, the rest of the profile is hand-written
 sed -i.bak -E "s|^(Uptime \.+ )[0-9.]+ years|\1$age years|; s|^(Role \.+ ).*|\1$(get role)|" blocks/profile.md
 rm blocks/profile.md.bak
