@@ -14,6 +14,9 @@ status = open
 role  = Senior IT Consultant
 birth = 1979-08
 
+# Maximum line width of the outputs: longer lines in code blocks wrap at word borders, indented under the value.
+width = 60
+
 # Outputs: file = blocks in order. The site README is pulled by the private website.
 README.md      = status profile principles stats contact
 site/README.md = status profile principles career skills contact stats
