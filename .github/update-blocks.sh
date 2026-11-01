@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 u="${1:-larknafets}"
 get() { sed -n -E "s/^$1 *= *//p" blocks/config; }
 fence='```'
+. .github/check-config.sh
 
 read -r repos prs merged < <(gh api graphql -f login="$u" \
   -f prs="author:$u type:pr" -f merged="author:$u type:pr is:merged" -f query='
@@ -64,7 +65,8 @@ EOF
 } > blocks/principles.md
 
 birth=$(get birth)
+role=$(get role | sed 's/[&|\\]/\\&/g') # & and | would break the sed replacement below
 age=$(awk -v y="$(date -u +%Y)" -v m="$(date -u +%m)" -v by="${birth%-*}" -v bm="${birth#*-}" 'BEGIN { printf "%.1f", ((y - by) * 12 + m - bm) / 12 }')
 # only the age number and the role are touched, the rest of the profile is hand-written
-sed -i.bak -E "s|^(Uptime \.+ )[0-9.]+ years|\1$age years|; s|^(Role \.+ ).*|\1$(get role)|" blocks/profile.md
+sed -i.bak -E "s|^(Uptime \.+ )[0-9.]+ years|\1$age years|; s|^(Role \.+ ).*|\1$role|" blocks/profile.md
 rm blocks/profile.md.bak

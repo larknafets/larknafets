@@ -6,12 +6,19 @@ cd "$(dirname "$0")/.."
 get() { sed -n -E "s/^$1 *= *//p" blocks/config; }
 fence='```'
 
+. .github/check-config.sh
+
+p='larknafets[337]:'
+open="$p seeking: $(get seeking)"$'\n'"$p location: $(get location)"$'\n'"$p topics: $(get topics)"
 case "$(get status)" in
-  employed)   dot='●'; active='active (running)';          msg='200 OK' ;;
-  open)       dot='●'; active='active (running)';          msg='200 OK, accepting new connections' ;;
-  unemployed) dot='○'; active='inactive (dead)';           msg='ready to start' ;;
-  away)       dot='●'; active='activating (auto-restart)'; msg='offline, back soon' ;;
-  *) echo "status: '$(get status)' is not one of employed, open, unemployed, away" >&2; exit 1 ;;
+  employed)   dot='●'; active='active (running)';          msg='200 OK'
+              log="$p employed, not looking" ;;
+  open)       dot='●'; active='active (running)';          msg='200 OK, accepting new connections'
+              log="$p employed, open to new things"$'\n'"$open" ;;
+  unemployed) dot='○'; active='inactive (dead)';           msg='ready to start'
+              log="$p between jobs"$'\n'"$open" ;;
+  away)       dot='●'; active='activating (auto-restart)'; msg='offline, back soon'
+              log="$p on vacation, offline"$'\n'"$p auto-restart pending" ;;
 esac
 cat > blocks/status.md <<EOF
 ${fence}console
@@ -19,6 +26,8 @@ stefan@kral:~\$ sudo systemctl status larknafets
 $dot larknafets.service - Stefan Kral
      Active: $active
      Status: "$msg"
+
+$log
 $fence
 EOF
 
