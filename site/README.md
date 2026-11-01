@@ -88,10 +88,10 @@ linkedin -> linkedin.com/in/stefan-kral
 ```console
 stefan@kral:~$ gh stats larknafets --refresh 24h --top 3
 Repos ......... 13
-Commits ....... 863
-PRs ........... 76
+Commits ....... 735
+PRs ........... 75
 Merged ........ 74
-Lines of code . 131.0k (+102.1k / -28.9k)
+Lines of code . 131.1k (+102.1k / -29.0k)
 
 nebenkostenrechner . 488 commits
 gcs-connector-evcc . 47 commits
