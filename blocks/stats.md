@@ -1,6 +1,6 @@
 ```console
 stefan@kral:~$ gh stats larknafets --refresh 24h --top 3
-Repos ......... 13
+Repos ......... 14
 Commits ....... 798
 PRs ........... 84
 Merged ........ 83
