@@ -21,7 +21,21 @@ jobs:
       - run: |
           git add README.md site blocks
           git diff --cached --quiet && exit 0
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: refresh stats, still 200 OK"
-          git push
+          # Commit through the API: GitHub signs these, a plain git push would be unsigned.
+          # shortcut: filenames with spaces or newlines break the loop, fine for this repo.
+          add=$(git diff --cached --name-only --diff-filter=AM | while read -r f; do
+            jq -n --arg p "$f" --arg c "$(base64 -w0 "$f")" '{path:$p,contents:$c}'
+          done | jq -s .)
+          del=$(git diff --cached --name-only --diff-filter=D | jq -R '{path:.}' | jq -s .)
+          jq -n --arg repo "$GITHUB_REPOSITORY" --arg branch "$GITHUB_REF_NAME" \
+            --arg oid "$(git rev-parse HEAD)" --argjson add "$add" --argjson del "$del" '{
+              query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { url } } }",
+              variables: {input: {
+                branch: {repositoryNameWithOwner: $repo, branchName: $branch},
+                message: {headline: "chore: refresh stats, still 200 OK"},
+                expectedHeadOid: $oid,
+                fileChanges: {additions: $add, deletions: $del}
+              }}
+            }' | gh api graphql --input -
+        env:
+          GH_TOKEN: ${{ github.token }}
