@@ -8,5 +8,5 @@ Lines of code . 139.6k (+108.8k / -30.8k)
 
 nebenkostenrechner . 602 commits
 ha-addons .......... 44 commits
-gcs-connector-evcc . 30 commits
+gcs-connector-evcc . 25 commits
 ```
