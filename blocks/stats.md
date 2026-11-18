@@ -1,12 +1,12 @@
 ```console
 stefan@kral:~$ gh stats larknafets --refresh 24h --top 3
 Repos ......... 14
-Commits ....... 866
-PRs ........... 93
-Merged ........ 90
-Lines of code . 139.6k (+108.8k / -30.8k)
+Commits ....... 902
+PRs ........... 94
+Merged ........ 91
+Lines of code . 141.4k (+109.5k / -31.9k)
 
-nebenkostenrechner . 602 commits
-ha-addons .......... 44 commits
-gcs-connector-evcc . 25 commits
+nebenkostenrechner . 626 commits
+ha-addons .......... 46 commits
+gcs-connector-evcc . 23 commits
 ```
